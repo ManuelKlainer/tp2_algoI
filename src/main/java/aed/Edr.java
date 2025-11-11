@@ -257,12 +257,8 @@ public class Edr {
 //-----------------------------------------------------CORREGIR---------------------------------------------------------
 
     public NotaFinal[] corregir() {
-        int[] idSospechosos = this.chequearCopias();
 
-        boolean[] esCopion = new boolean[this.E];
-        for (int i = 0; i < idSospechosos.length; i++) {
-            esCopion[idSospechosos[i]] = true;
-        }
+        boolean[] esCopion = this.copiones;
 
         ColaDePrioridadNota colaNotas = new ColaDePrioridadNota(this.E, false); // max-heap
         for (int i = 0; i < this.E; i++) {
@@ -290,6 +286,7 @@ public class Edr {
 //-------------------------------------------------------CHEQUEAR COPIAS-------------------------------------------------
 
     public int[] chequearCopias() {
+        this.copiones = new boolean[this.E];
         int[][] cantidades = new int[this.R][10];
         for (int i = 0; i < this.E; i++) {
             Estudiante est = this.estudiantes[i];
@@ -335,6 +332,7 @@ public class Edr {
 
             if (esSospechoso && resolvioAlguno) {
                 sospechosos.add(id);
+                this.copiones[id] = true;
             }
         }
         int[] resultado = new int[sospechosos.size()];
